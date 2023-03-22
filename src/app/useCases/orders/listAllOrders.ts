@@ -2,10 +2,10 @@ import { Request, Response } from 'express';
 
 import { Order } from '../../models/Order';
 
-export async function listOrders(req: Request, res: Response) {
+export async function listAllOrders(req: Request, res: Response) {
   try {
     const orders = await Order.find()
-      .where({ archived: false })
+      .where({ archived: true })
       .sort({ createdAt: 1 })
       .populate({
         path: 'products',

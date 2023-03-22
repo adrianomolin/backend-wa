@@ -14,6 +14,11 @@ export const Order = model('Order', new Schema({
     type: Date,
     default: Date.now,
   },
+  archived: {
+    type: Boolean,
+    required: true,
+    default: false,
+  },
   products: {
     required: true,
     type: [{

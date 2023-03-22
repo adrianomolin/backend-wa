@@ -20,19 +20,16 @@ export const Product = model('Product', new Schema({
   ingredients: {
     required: true,
     type: [{
-      name: {
-        type: String,
+      ingredient: {
+        type: Schema.Types.ObjectId,
         required: true,
-      },
-      icon: {
-        type: String,
-        required: true,
-      },
+        ref: 'Ingredient',
+      }
     }],
   },
   category: {
     type: Schema.Types.ObjectId,
     required: true,
-    ref: 'Category'
+    ref: 'Category',
   },
 }));

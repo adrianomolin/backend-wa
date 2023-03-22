@@ -2,12 +2,12 @@ import { Request, Response } from 'express';
 
 import { Product } from '../../models/Product';
 
-export async function createProduct(req: Request, res: Response) {
+export async function updateProduct(req: Request, res: Response) {
   try {
-    const imagePath = req.file?.filename;
-    const { name, description, price, category, ingredients } = req.body;
+    const { productId } = req.params;
+    const { image, name, description, category, price, ingredients } = req.body;
 
-    const ingredientData: object[] = [] ;
+    const ingredientData: object[] = [];
 
     JSON.parse(ingredients).map((ingredient: string) => {
       ingredientData.push({
@@ -15,16 +15,16 @@ export async function createProduct(req: Request, res: Response) {
       });
     });
 
-    const product = await Product.create({
+    await Product.findByIdAndUpdate(productId, {
+      image,
       name,
       description,
-      imagePath,
-      price: Number(price),
       category,
+      price,
       ingredients: ingredientData,
     });
 
-    res.status(201).json(product);
+    res.sendStatus(204);
   } catch (error) {
     console.log(error);
     res.sendStatus(500);
