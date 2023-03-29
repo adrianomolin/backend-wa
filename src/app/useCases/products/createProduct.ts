@@ -1,11 +1,18 @@
 import { Request, Response } from 'express';
 
 import { Product } from '../../models/Product';
+import { uploadImage } from '../../utils/uploadFile';
 
 export async function createProduct(req: Request, res: Response) {
   try {
-    const imagePath = req.file?.filename;
     const { name, description, price, category, ingredients } = req.body;
+
+    if (!req.file) {
+      res.status(400).send('No file uploaded.');
+      return;
+    }
+
+    const imagePath = await uploadImage(req.file);
 
     const ingredientData: object[] = [] ;
 

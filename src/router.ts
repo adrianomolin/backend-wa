@@ -32,19 +32,14 @@ import { deleteIngredient } from './app/useCases/ingredients/deleteUser';
 import { updateProduct } from './app/useCases/products/updateProduct';
 import { resetOrderById } from './app/useCases/orders/resetOrderById';
 
+const multerMid = multer({
+  storage: multer.memoryStorage(),
+  limits: {
+    fileSize: 5 * 1024 * 1024,
+  },
+});
 
 export const router = Router();
-
-const upload = multer({
-  storage: multer.diskStorage({
-    destination(req, file, cb) {
-      cb(null, path.resolve(__dirname, '..', 'uploads'));
-    },
-    filename(req, file, cb) {
-      cb(null, `${Date.now()}-${file.originalname.replace(/\s/g, '-')}`);
-    },
-  })
-});
 
 // List categories
 router.get('/categories', AuthMiddleware, listCategories);
@@ -57,8 +52,8 @@ router.post('/categories', AuthMiddleware, createCategory);
 router.get('/products', AuthMiddleware, listProducts);
 
 // Create Product
-router.post('/products', AuthMiddleware, upload.single('image'), createProduct);
-router.patch('/products/:productId', AuthMiddleware, upload.single('image'), updateProduct);
+router.post('/products', AuthMiddleware, multerMid.single('image'), createProduct);
+router.patch('/products/:productId', AuthMiddleware, multerMid.single('image'), updateProduct);
 
 // Delete product
 router.delete('/products/:productId', AuthMiddleware, deleteProduct);
