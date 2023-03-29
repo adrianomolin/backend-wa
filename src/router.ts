@@ -1,6 +1,4 @@
-import path from 'node:path';
-
-import { Request, Response, Router } from 'express';
+import { Router } from 'express';
 import multer from 'multer';
 
 import { createCategory } from './app/useCases/categories/createCategory';
