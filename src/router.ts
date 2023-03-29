@@ -30,6 +30,7 @@ import { createIngredient } from './app/useCases/ingredients/createIngredient';
 import { listIngredients } from './app/useCases/ingredients/listIngredients';
 import { deleteIngredient } from './app/useCases/ingredients/deleteUser';
 import { updateProduct } from './app/useCases/products/updateProduct';
+import { resetOrderById } from './app/useCases/orders/resetOrderById';
 
 
 export const router = Router();
@@ -40,7 +41,7 @@ const upload = multer({
       cb(null, path.resolve(__dirname, '..', 'uploads'));
     },
     filename(req, file, cb) {
-      cb(null, `${Date.now()}-${file.originalname}`);
+      cb(null, `${Date.now()}-${file.originalname.replace(/\s/g, '-')}`);
     },
   })
 });
@@ -86,6 +87,7 @@ router.patch('/orders/:orderId', AuthMiddleware, changeOrderStatus);
 
 // Reset daily orders
 router.post('/orders/reset', AuthMiddleware, resetDayOrders);
+router.post('/orders/reset/:orderId', AuthMiddleware, resetOrderById);
 
 // Delete/cancel order
 router.delete('/orders/:orderId', AuthMiddleware, cancelOrder);
