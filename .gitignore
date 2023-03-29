@@ -2,7 +2,3 @@
 
 node_modules
 dist
-<<<<<<< HEAD
-/.env
-=======
->>>>>>> 6fbf23a (feat!: untrack .env files)
