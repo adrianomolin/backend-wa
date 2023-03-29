@@ -12,9 +12,10 @@ const app = express();
 const server = http.createServer(app);
 export const io = new Server(server);
 
+dotenv.config();
+
 async function start () {
   try {
-    dotenv.config();
 
     if (!process.env.ATLAS_DB_URI) {
       console.error('API ERROR: missing arguments to connect to database');

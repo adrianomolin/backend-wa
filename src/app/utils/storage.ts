@@ -1,11 +1,16 @@
 import { Storage } from '@google-cloud/storage';
-import path from 'path';
+import dotenv from 'dotenv';
 
-const serviceKey = path.join(__dirname, '../../../keys.json');
+dotenv.config();
 
 const storage = new Storage({
-  keyFilename: serviceKey,
-  projectId: process.env.GC_PROJECT_ID
+  credentials: {
+    'type': 'service_account',
+    'private_key': process.env.GCS_PRIVATE_KEY,
+    'client_email': process.env.GCS_CLIENT_EMAIL,
+    'client_id': process.env.GCS_CLIENT_ID,
+  },
+  projectId: process.env.GCS_PROJECT_ID
 });
 
 export default storage;
