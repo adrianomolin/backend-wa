@@ -1,12 +1,10 @@
 {
   "version": 2,
   "public": true,
-  "build": [
-    {
+  "build": {
       "src": "api/index.ts",
       "use": "@vercel/node"
-    }
-  ],
+  },
   "routes": [
     {
       "src": "/(.*)",

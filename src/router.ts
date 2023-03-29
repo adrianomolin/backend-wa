@@ -1,6 +1,6 @@
 import path from 'node:path';
 
-import { Router } from 'express';
+import { Request, Response, Router } from 'express';
 import multer from 'multer';
 
 import { createCategory } from './app/useCases/categories/createCategory';
@@ -41,6 +41,9 @@ const multerMid = multer({
 
 export const router = Router();
 
+router.get('/', (req: Request, res: Response) => {
+  res.json({ message: 'App initialized' });
+});
 // List categories
 router.get('/categories', AuthMiddleware, listCategories);
 router.get('/categories/:categoryId', AuthMiddleware, getCategoryById);
