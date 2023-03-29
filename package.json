@@ -4,9 +4,9 @@
   "main": "index.js",
   "license": "MIT",
   "scripts": {
-    "build": "tsc",
+    "build": "tsup src",
     "dev": "nodemon --files src/index.ts",
-    "start": "node dist"
+    "start": "node dist/server.js"
   },
   "devDependencies": {
     "@types/bcryptjs": "^2.4.2",
@@ -20,6 +20,7 @@
     "eslint": "^8.33.0",
     "nodemon": "^2.0.21",
     "ts-node": "^10.9.1",
+    "tsup": "^6.7.0",
     "typescript": "^4.9.5"
   },
   "dependencies": {
@@ -27,7 +28,6 @@
     "bcryptjs": "^2.4.3",
     "dotenv": "^16.0.3",
     "express": "^4.18.2",
-    "heroku": "^8.0.2",
     "jsonwebtoken": "^9.0.0",
     "jwt-decode": "^3.1.2",
     "mongoose": "^6.9.1",
