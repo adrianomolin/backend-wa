@@ -35,4 +35,5 @@ async function start () {
 }
 
 start();
-export default server;
+
+export default app;
