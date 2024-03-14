@@ -15,14 +15,13 @@ dotenv.config();
 
 async function start () {
   try {
-
-    if (!process.env.ATLAS_DB_URI) {
+    if (!process.env.DB_URI) {
       console.error('API ERROR: missing arguments to connect to database');
       return null;
     }
 
     mongoose.set('strictQuery', true);
-    await mongoose.connect(process.env.ATLAS_DB_URI || '');
+    await mongoose.connect(process.env.DB_URI || '');
     const port = 3001;
 
     app.use(cors);
@@ -36,4 +35,5 @@ async function start () {
   }
 }
 
-start();
+start()
+module.exports = app;
