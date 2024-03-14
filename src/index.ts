@@ -13,26 +13,13 @@ export const io = new Server(server);
 
 dotenv.config();
 
-async function start() {
-  try {
-    if (!process.env.DB_URI) {
-      console.error('API ERROR: missing arguments to connect to database');
-      return null;
-    }
+mongoose.set('strictQuery', true);
+mongoose.connect(process.env.DB_URI || '');
 
-    mongoose.set('strictQuery', true);
-    await mongoose.connect(process.env.DB_URI || '');
+app.use(cors);
+app.use(express.json());
+app.use(router);
 
-    app.use(cors);
-    app.use(express.json());
-    app.use(router);
+app.listen(3000);
 
-    await app.listen(3000);
-  }
-  catch (e) {
-    console.log(e);
-  }
-}
-
-start();
 export default app;

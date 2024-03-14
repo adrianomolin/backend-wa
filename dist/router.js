@@ -38,10 +38,8 @@ const multerMid = (0, multer_1.default)({
     },
 });
 exports.router = (0, express_1.Router)();
-exports.router.get('/', (req, res) => {
-    return res.json({
-        message: 'Main-Page'
-    });
+exports.router.get('/', (_req, res) => {
+    return res.send('Main-Page');
 });
 // List categories
 exports.router.get('/categories', AuthMiddleware_1.AuthMiddleware, listCategories_1.listCategories);

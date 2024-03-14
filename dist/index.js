@@ -15,22 +15,10 @@ const app = (0, express_1.default)();
 const server = http_1.default.createServer(app);
 exports.io = new socket_io_1.Server(server);
 dotenv_1.default.config();
-async function start() {
-    try {
-        if (!process.env.DB_URI) {
-            console.error('API ERROR: missing arguments to connect to database');
-            return null;
-        }
-        mongoose_1.default.set('strictQuery', true);
-        await mongoose_1.default.connect(process.env.DB_URI || '');
-        app.use(cors_1.default);
-        app.use(express_1.default.json());
-        app.use(router_1.router);
-        await app.listen(3000);
-    }
-    catch (e) {
-        console.log(e);
-    }
-}
-start();
+mongoose_1.default.set('strictQuery', true);
+mongoose_1.default.connect(process.env.DB_URI || '');
+app.use(cors_1.default);
+app.use(express_1.default.json());
+app.use(router_1.router);
+app.listen(3000);
 exports.default = app;
