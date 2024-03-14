@@ -39,6 +39,13 @@ const multerMid = multer({
 
 export const router = Router();
 
+router.get('/', (req, res) => {
+
+  return res.json({
+    message: 'Main-Page'
+  })
+})
+
 // List categories
 router.get('/categories', AuthMiddleware, listCategories);
 router.get('/categories/:categoryId', AuthMiddleware, getCategoryById);
