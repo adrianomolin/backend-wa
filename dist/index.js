@@ -33,3 +33,4 @@ async function start() {
     }
 }
 start();
+exports.default = start;
