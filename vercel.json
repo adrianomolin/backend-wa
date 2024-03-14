@@ -1,16 +1,16 @@
 {
   "version": 2,
-  "buildCommand": "tsc",
   "builds": [
     {
-      "src": "index.ts",
-      "use": "@now/node"
+      "src": "dist/index.js",
+      "use": "@vercel/node",
+      "config": { "includeFiles": ["dist/**"] }
     }
   ],
   "routes": [
     {
       "src": "/(.*)",
-      "dest": "index.ts"
+      "dest": "dist/index.js"
     }
   ]
 }
