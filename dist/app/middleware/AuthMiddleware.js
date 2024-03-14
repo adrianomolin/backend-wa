@@ -17,7 +17,7 @@ function AuthMiddleware(req, res, next) {
         req.user = { id, permissions, role };
         return next();
     }
-    catch (_a) {
+    catch {
         return res.sendStatus(401);
     }
 }

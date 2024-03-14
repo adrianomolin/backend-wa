@@ -27,7 +27,7 @@ async function start () {
     app.use(express.json());
     app.use(router);
 
-    server.listen(3000);
+    app.listen(3000);
   }
   catch (e) {
     console.log(e);
@@ -35,3 +35,4 @@ async function start () {
 }
 
 start();
+export default server;
