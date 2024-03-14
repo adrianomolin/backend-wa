@@ -22,18 +22,16 @@ async function start () {
 
     mongoose.set('strictQuery', true);
     await mongoose.connect(process.env.DB_URI || '');
-    const port = 3001;
 
     app.use(cors);
     app.use(express.json());
     app.use(router);
 
-    server.listen(port, () => console.log(`🚀 Server is running on https://localhost:${port}`));
+    server.listen(3000);
   }
   catch (e) {
     console.log(e);
   }
 }
 
-start()
-module.exports = app;
+start();

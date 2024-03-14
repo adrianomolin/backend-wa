@@ -33,11 +33,10 @@ function start() {
             }
             mongoose_1.default.set('strictQuery', true);
             yield mongoose_1.default.connect(process.env.DB_URI || '');
-            const port = 3001;
             app.use(cors_1.default);
             app.use(express_1.default.json());
             app.use(router_1.router);
-            server.listen(port, () => console.log(`🚀 Server is running on https://localhost:${port}`));
+            server.listen(3000);
         }
         catch (e) {
             console.log(e);
@@ -45,4 +44,3 @@ function start() {
     });
 }
 start();
-module.exports = app;
