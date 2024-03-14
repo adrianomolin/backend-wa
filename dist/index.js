@@ -33,4 +33,4 @@ async function start() {
     }
 }
 start();
-exports.default = start;
+exports.default = app;
