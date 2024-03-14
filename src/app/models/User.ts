@@ -23,7 +23,7 @@ export const User = model('User', new Schema({
     type: String,
     required: true,
     uppercase: true,
-    default: 'USER  '
+    default: 'USER'
   },
   password: {
     type: String,
