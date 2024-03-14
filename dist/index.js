@@ -26,11 +26,10 @@ async function start() {
         app.use(cors_1.default);
         app.use(express_1.default.json());
         app.use(router_1.router);
-        app.listen(3000);
+        await app.listen(3000);
     }
     catch (e) {
         console.log(e);
     }
 }
 start();
-exports.default = server;

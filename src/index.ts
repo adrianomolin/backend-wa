@@ -13,7 +13,7 @@ export const io = new Server(server);
 
 dotenv.config();
 
-async function start () {
+async function start() {
   try {
     if (!process.env.DB_URI) {
       console.error('API ERROR: missing arguments to connect to database');
@@ -27,7 +27,7 @@ async function start () {
     app.use(express.json());
     app.use(router);
 
-    app.listen(3000);
+    await app.listen(3000);
   }
   catch (e) {
     console.log(e);
@@ -35,5 +35,3 @@ async function start () {
 }
 
 start();
-
-export default server;
