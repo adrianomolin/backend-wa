@@ -1,6 +1,6 @@
 import storage from './storage';
 
-const bucket = storage.bucket('waiterapp-uploads');
+const bucket = storage.bucket('waiterapp');
 
 interface FileProps {
   originalname: string,
@@ -14,6 +14,7 @@ export const uploadImage = (file: FileProps) => new Promise((resolve, reject) =>
   const blobStream = blob.createWriteStream({
     resumable: false
   });
+
   blobStream.on('finish', () => {
     const publicUrl = `https://storage.googleapis.com/${bucket.name}/${blob.name}`;
     resolve(publicUrl);
