@@ -20,6 +20,13 @@ export async function createUser(req: Request, res: Response) {
       });
     }
 
+    if (req.headers['demo'] === 'true') return res.sendStatus(201).json({
+      name,
+      email,
+      password: passwordHash,
+      role
+    })
+
     const user = await User.create({
       name,
       email,

@@ -16,6 +16,13 @@ async function createUser(req, res) {
                 'error': 'Name, email and password fields are required!',
             });
         }
+        if (req.headers['demo'] === 'true')
+            return res.sendStatus(201).json({
+                name,
+                email,
+                password: passwordHash,
+                role
+            });
         const user = await User_1.User.create({
             name,
             email,

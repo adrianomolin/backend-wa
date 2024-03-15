@@ -22,6 +22,15 @@ export async function createProduct(req: Request, res: Response) {
       });
     });
 
+    if (req.headers['demo'] === 'true') return res.sendStatus(201).json({
+      name,
+      description,
+      imagePath,
+      price: Number(price),
+      category,
+      ingredients: ingredientData,
+    });
+
     const product = await Product.create({
       name,
       description,

@@ -8,6 +8,8 @@ export async function deleteProduct(req: Request, res: Response) {
   try {
     const { productId } = req.params;
 
+    if (req.headers['demo'] === 'true') return res.sendStatus(204);
+
     const product = await Product.findById(productId);
 
     const path = `${__dirname}/../../../../uploads/${product?.imagePath}`;

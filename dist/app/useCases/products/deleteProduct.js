@@ -4,21 +4,17 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.deleteProduct = void 0;
-const fs_1 = __importDefault(require("fs"));
 const Product_1 = require("../../models/Product");
+const storage_1 = __importDefault(require("../../utils/storage"));
+const bucket = storage_1.default.bucket('waiterapp');
 async function deleteProduct(req, res) {
     try {
         const { productId } = req.params;
+        if (req.headers['demo'] === 'true')
+            return res.sendStatus(204);
         const product = await Product_1.Product.findById(productId);
-        const path = `${__dirname}/../../../../uploads/${product?.imagePath}`;
-        fs_1.default.unlink(path, function (err) {
-            if (err) {
-                console.log(err);
-            }
-            else {
-                console.log('File removed: ', path);
-            }
-        });
+        if (product?.imagePath)
+            bucket.file(product.imagePath).delete();
         await Product_1.Product.findByIdAndDelete(productId);
         res.sendStatus(204);
     }

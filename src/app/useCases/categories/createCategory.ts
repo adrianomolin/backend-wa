@@ -12,6 +12,14 @@ export async function createCategory(req: Request, res: Response) {
       });
     }
 
+    if (req.headers['demo'] === 'true') {
+      return res.status(201).json({
+        name,
+        icon,
+        _id: 'demo-' + Math.random(),
+      });
+    }
+
     const category = await Category.create({ icon, name });
 
     res.status(201).json(category);

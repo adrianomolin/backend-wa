@@ -4,6 +4,8 @@ import { Order } from '../../models/Order';
 
 export async function resetDayOrders(req: Request, res: Response) {
   try {
+    if (req.headers['demo'] === 'true') return res.json([]);
+
     const orders = await Order.find()
       .where({ archived: false })
       .updateMany({ archived: true });

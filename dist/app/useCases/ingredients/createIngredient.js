@@ -10,6 +10,13 @@ async function createIngredient(req, res) {
                 'error': 'Name is required',
             });
         }
+        if (req.headers['demo'] === 'true') {
+            return res.status(201).json({
+                name,
+                icon,
+                _id: 'demo-' + Math.random(),
+            });
+        }
         const ingredient = await Ingredient_1.Ingredient.create({ icon, name });
         res.status(201).json(ingredient);
     }

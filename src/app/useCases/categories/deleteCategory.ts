@@ -3,6 +3,8 @@ import { Request, Response } from 'express';
 import { Category } from '../../models/Category';
 
 export async function deleteCategory(req: Request, res: Response) {
+  if (req.headers['demo'] === 'true') return res.sendStatus(204);
+
   try {
     const { categoryId } = req.params;
 

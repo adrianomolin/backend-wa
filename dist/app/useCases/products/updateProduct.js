@@ -6,6 +6,8 @@ async function updateProduct(req, res) {
     try {
         const { productId } = req.params;
         const { image, name, description, category, price, ingredients } = req.body;
+        if (req.headers['demo'] === 'true')
+            return res.sendStatus(204);
         const ingredientData = [];
         JSON.parse(ingredients).map((ingredient) => {
             ingredientData.push({

@@ -7,6 +7,8 @@ export async function updateProduct(req: Request, res: Response) {
     const { productId } = req.params;
     const { image, name, description, category, price, ingredients } = req.body;
 
+    if (req.headers['demo'] === 'true') return res.sendStatus(204);
+
     const ingredientData: object[] = [];
 
     JSON.parse(ingredients).map((ingredient: string) => {

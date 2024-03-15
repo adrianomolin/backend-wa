@@ -17,6 +17,15 @@ async function createProduct(req, res) {
                 ingredient: ingredient
             });
         });
+        if (req.headers['demo'] === 'true')
+            return res.sendStatus(201).json({
+                name,
+                description,
+                imagePath,
+                price: Number(price),
+                category,
+                ingredients: ingredientData,
+            });
         const product = await Product_1.Product.create({
             name,
             description,

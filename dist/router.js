@@ -28,7 +28,7 @@ const AuthMiddleware_1 = require("./app/middleware/AuthMiddleware");
 const editCategory_1 = require("./app/useCases/categories/editCategory");
 const createIngredient_1 = require("./app/useCases/ingredients/createIngredient");
 const listIngredients_1 = require("./app/useCases/ingredients/listIngredients");
-const deleteUser_2 = require("./app/useCases/ingredients/deleteUser");
+const deleteIngredient_1 = require("./app/useCases/ingredients/deleteIngredient");
 const updateProduct_1 = require("./app/useCases/products/updateProduct");
 const resetOrderById_1 = require("./app/useCases/orders/resetOrderById");
 const multerMid = (0, multer_1.default)({
@@ -38,9 +38,6 @@ const multerMid = (0, multer_1.default)({
     },
 });
 exports.router = (0, express_1.Router)();
-exports.router.get('/', (_req, res) => {
-    return res.send('Main-Page');
-});
 // List categories
 exports.router.get('/categories', AuthMiddleware_1.AuthMiddleware, listCategories_1.listCategories);
 exports.router.get('/categories/:categoryId', AuthMiddleware_1.AuthMiddleware, getCategoryById_1.getCategoryById);
@@ -55,7 +52,7 @@ exports.router.patch('/products/:productId', AuthMiddleware_1.AuthMiddleware, mu
 exports.router.delete('/products/:productId', AuthMiddleware_1.AuthMiddleware, deleteProduct_1.deleteProduct);
 exports.router.post('/ingredients', AuthMiddleware_1.AuthMiddleware, createIngredient_1.createIngredient);
 exports.router.get('/ingredients', AuthMiddleware_1.AuthMiddleware, listIngredients_1.listIngredients);
-exports.router.delete('/ingredients/:ingredientId', AuthMiddleware_1.AuthMiddleware, deleteUser_2.deleteIngredient);
+exports.router.delete('/ingredients/:ingredientId', AuthMiddleware_1.AuthMiddleware, deleteIngredient_1.deleteIngredient);
 // Get products by category
 exports.router.get('/categories/:categoryId/products', AuthMiddleware_1.AuthMiddleware, listProductsByCategory_1.listProductByCategory);
 exports.router.patch('/categories/:categoryId', AuthMiddleware_1.AuthMiddleware, editCategory_1.editCategory);

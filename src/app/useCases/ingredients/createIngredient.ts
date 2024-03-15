@@ -11,6 +11,14 @@ export async function createIngredient(req: Request, res: Response) {
       });
     }
 
+    if (req.headers['demo'] === 'true') {
+      return res.status(201).json({
+        name,
+        icon,
+        _id: 'demo-' + Math.random(),
+      });
+    }
+
     const ingredient = await Ingredient.create({ icon, name });
 
     res.status(201).json(ingredient);

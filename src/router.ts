@@ -26,7 +26,7 @@ import { AuthMiddleware } from './app/middleware/AuthMiddleware';
 import { editCategory } from './app/useCases/categories/editCategory';
 import { createIngredient } from './app/useCases/ingredients/createIngredient';
 import { listIngredients } from './app/useCases/ingredients/listIngredients';
-import { deleteIngredient } from './app/useCases/ingredients/deleteUser';
+import { deleteIngredient } from './app/useCases/ingredients/deleteIngredient';
 import { updateProduct } from './app/useCases/products/updateProduct';
 import { resetOrderById } from './app/useCases/orders/resetOrderById';
 
@@ -38,13 +38,6 @@ const multerMid = multer({
 });
 
 export const router = Router();
-
-router.get('/', (req, res) => {
-
-  return res.json({
-    message: 'Main-Page'
-  })
-})
 
 // List categories
 router.get('/categories', AuthMiddleware, listCategories);

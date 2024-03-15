@@ -5,6 +5,8 @@ const Order_1 = require("../../models/Order");
 async function cancelOrder(req, res) {
     try {
         const { orderId } = req.params;
+        if (req.headers['demo'] === 'true')
+            return res.sendStatus(204);
         await Order_1.Order.findByIdAndDelete(orderId);
         res.sendStatus(204);
     }
