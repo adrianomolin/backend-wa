@@ -14,7 +14,7 @@ export async function createProduct(req: Request, res: Response) {
 
     const imagePath = await uploadImage(req.file);
 
-    const ingredientData: object[] = [] ;
+    const ingredientData: object[] = [];
 
     JSON.parse(ingredients).map((ingredient: string) => {
       ingredientData.push({
