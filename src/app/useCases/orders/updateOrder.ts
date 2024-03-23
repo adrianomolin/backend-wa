@@ -2,12 +2,10 @@ import { Request, Response } from 'express';
 
 import { Order } from '../../models/Order';
 
-export async function changeOrderStatus(req: Request, res: Response) {
+export async function updateOrder(req: Request, res: Response) {
   try {
     const { orderId } = req.params;
-    const { status } = req.body;
-
-    console.log(orderId)
+    const { table, status, products } = req.body;
 
     if (!['WAITING', 'IN_PRODUCTION', 'DONE'].includes(status)) {
       return res.status(400).json({
@@ -17,7 +15,7 @@ export async function changeOrderStatus(req: Request, res: Response) {
 
     if (req.headers['demo'] === 'true') return res.sendStatus(204);
 
-    await Order.findByIdAndUpdate(orderId, { status });
+    await Order.findByIdAndUpdate(orderId, { table, status, products });
 
     res.sendStatus(204);
   } catch (error) {
