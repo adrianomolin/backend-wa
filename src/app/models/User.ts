@@ -28,5 +28,9 @@ export const User = model('User', new Schema({
   password: {
     type: String,
     required: [true, 'Please enter an password'],
+  },
+  demo: {
+    type: Boolean,
+    default: false,
   }
 }));
