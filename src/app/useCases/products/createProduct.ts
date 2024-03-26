@@ -1,11 +1,13 @@
 import { Request, Response } from 'express';
-
-import { Product } from '../../models/Product';
 import { uploadImage } from '../../utils/uploadFile';
+import { getDBModel } from '../../../tenant/utils/switchDb';
 
 export async function createProduct(req: Request, res: Response) {
   try {
+    const tenant = req.tenant;
     const { name, description, price, category, ingredients } = req.body;
+
+    const model = await getDBModel(tenant, 'Product');
 
     if (!req.file) {
       res.status(400).send('No file uploaded.');
@@ -22,16 +24,7 @@ export async function createProduct(req: Request, res: Response) {
       });
     });
 
-    if (req.headers['demo'] === 'true') return res.sendStatus(201).json({
-      name,
-      description,
-      imagePath,
-      price: Number(price),
-      category,
-      ingredients: ingredientData,
-    });
-
-    const product = await Product.create({
+    const product = await model.create({
       name,
       description,
       imagePath,

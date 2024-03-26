@@ -1,15 +1,15 @@
 import { Request, Response } from 'express';
-
-import { Product } from '../../models/Product';
+import { getDBModel } from '../../../tenant/utils/switchDb';
 
 export async function updateProduct(req: Request, res: Response) {
   try {
+    const tenant = req.tenant;
     const { productId } = req.params;
     const { image, name, description, category, price, ingredients } = req.body;
 
-    if (req.headers['demo'] === 'true') return res.sendStatus(204);
-
     const ingredientData: object[] = [];
+
+    const model = await getDBModel(tenant, 'Product');
 
     JSON.parse(ingredients).map((ingredient: string) => {
       ingredientData.push({
@@ -17,7 +17,7 @@ export async function updateProduct(req: Request, res: Response) {
       });
     });
 
-    await Product.findByIdAndUpdate(productId, {
+    await model.findByIdAndUpdate(productId, {
       image,
       name,
       description,

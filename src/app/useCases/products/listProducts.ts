@@ -1,10 +1,12 @@
 import { Request, Response } from 'express';
-
-import { Product } from '../../models/Product';
+import { getDBModel } from '../../../tenant/utils/switchDb';
 
 export async function listProducts(req: Request, res: Response) {
   try {
-    const products = await Product.find()
+    const tenant = req.tenant;
+    const model = await getDBModel(tenant, 'Product');
+
+    const products = await model.find()
       .populate('category')
       .populate('ingredients.ingredient');
 
