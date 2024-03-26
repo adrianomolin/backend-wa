@@ -1,32 +1,34 @@
 import { NextFunction, Request, Response } from 'express';
 import jwt from 'jsonwebtoken';
+import { env } from '../../config/env';
+import { switchDB } from '../../tenant/utils/switchDb';
+import { schemas } from '../../tenant/utils/schemas';
 
 interface TokenPayload {
   id: string;
   permissions: string[];
-  role: string[];
   iat: number;
-  exp: number
+  exp: number;
+  orgId: string;
 }
 
-export function AuthMiddleware(
-  req: Request, res: Response, next: NextFunction
-) {
-
+export async function AuthMiddleware(req: Request, res: Response, next: NextFunction) {
   const { authorization } = req.headers;
 
   if (!authorization) {
+    if (req.route.path === '/users' && req.method === 'POST') return next();
     return res.sendStatus(401);
   }
 
   const token = authorization.replace('Bearer', '').trim();
 
   try {
-    const data = jwt.verify(token, process.env.JWT_SECRET!);
+    const { id, permissions, orgId } = data as TokenPayload;
 
-    const { id, permissions, role } = data as TokenPayload;
+    const org = await switchDB(orgId, schemas);
 
-    req.user = { id, permissions, role };
+    req.tenant = org;
+    req.user = { id, permissions, orgId };
 
     return next();
   } catch {
