@@ -3,7 +3,8 @@ declare namespace Express {
     user: {
       id: string,
       permissions: string[],
-      role: string[],
+      orgId: string,
     };
+    tenant: mongoose.Connection
   }
 }
