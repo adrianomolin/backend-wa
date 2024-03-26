@@ -20,11 +20,7 @@ class AuthController {
       return res.sendStatus(401);
     }
 
-    const token = jwt.sign({
-      id: user._id,
-      permissions: user.permissions,
-      role: user.role
-    }, process.env.JWT_SECRET!, { expiresIn: '1d' });
+    const accessToken = jwtSign(user.id, user.orgId, user.permissions);
 
     return res.json({
       user: {
