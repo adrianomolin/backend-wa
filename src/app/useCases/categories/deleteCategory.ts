@@ -1,14 +1,13 @@
 import { Request, Response } from 'express';
-
-import { Category } from '../../models/Category';
+import { getDBModel } from '../../../tenant/utils/switchDb';
 
 export async function deleteCategory(req: Request, res: Response) {
-  if (req.headers['demo'] === 'true') return res.sendStatus(204);
-
   try {
+    const tenant = req.tenant;
     const { categoryId } = req.params;
 
-    await Category.findByIdAndDelete(categoryId);
+    const model = await getDBModel(tenant, 'Category');
+    await model.findByIdAndDelete(categoryId);
 
     res.sendStatus(204);
   } catch (error) {

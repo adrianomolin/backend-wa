@@ -1,10 +1,12 @@
 import { Request, Response } from 'express';
-
-import { Category } from '../../models/Category';
+import { getDBModel } from '../../../tenant/utils/switchDb';
 
 export async function listCategories(req: Request, res: Response) {
   try {
-    const categories = await Category.find();
+    const tenant = req.tenant;
+
+    const model = await getDBModel(tenant, 'Category');
+    const categories = await model.find();
 
     res.json(categories);
   } catch (error) {

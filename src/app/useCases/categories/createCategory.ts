@@ -1,9 +1,9 @@
 import { Request, Response } from 'express';
-
-import { Category } from '../../models/Category';
+import { getDBModel } from '../../../tenant/utils/switchDb';
 
 export async function createCategory(req: Request, res: Response) {
   try {
+    const tenant = req.tenant;
     const { icon, name } = req.body;
 
     if (!name) {
@@ -12,15 +12,8 @@ export async function createCategory(req: Request, res: Response) {
       });
     }
 
-    if (req.headers['demo'] === 'true') {
-      return res.status(201).json({
-        name,
-        icon,
-        _id: 'demo-' + Math.random(),
-      });
-    }
-
-    const category = await Category.create({ icon, name });
+    const model = await getDBModel(tenant, 'Category');
+    const category = await model.create({ icon, name });
 
     res.status(201).json(category);
   } catch (error) {
