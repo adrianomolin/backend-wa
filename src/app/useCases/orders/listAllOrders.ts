@@ -1,10 +1,12 @@
 import { Request, Response } from 'express';
-
-import { Order } from '../../models/Order';
+import { getDBModel } from '../../../tenant/utils/switchDb';
 
 export async function listAllOrders(req: Request, res: Response) {
   try {
-    const orders = await Order.find()
+    const tenant = req.tenant;
+    const model = await getDBModel(tenant, 'Order');
+
+    const orders = await model.find()
       .where({ archived: true })
       .sort({ createdAt: 1 })
       .populate({

@@ -1,14 +1,13 @@
 import { Request, Response } from 'express';
-
-import { Order } from '../../models/Order';
+import { getDBModel } from '../../../tenant/utils/switchDb';
 
 export async function resetOrderById(req: Request, res: Response) {
   try {
+    const tenant = req.tenant;
     const { orderId } = req.params;
 
-    if (req.headers['demo'] === 'true') return res.sendStatus(201);
-
-    const order = await Order.findByIdAndUpdate(orderId, { archived: true });
+    const model = await getDBModel(tenant, 'Order');
+    const order = await model.findByIdAndUpdate(orderId, { archived: true });
 
     res.status(201).json(order);
   } catch (error) {

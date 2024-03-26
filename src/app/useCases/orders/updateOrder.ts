@@ -1,11 +1,13 @@
 import { Request, Response } from 'express';
-
-import { Order } from '../../models/Order';
+import { getDBModel } from '../../../tenant/utils/switchDb';
 
 export async function updateOrder(req: Request, res: Response) {
   try {
+    const tenant = req.tenant;
     const { orderId } = req.params;
     const { table, status, products } = req.body;
+
+    const model = await getDBModel(tenant, 'Order');
 
     if (!['WAITING', 'IN_PRODUCTION', 'DONE'].includes(status)) {
       return res.status(400).json({
@@ -13,9 +15,7 @@ export async function updateOrder(req: Request, res: Response) {
       });
     }
 
-    if (req.headers['demo'] === 'true') return res.sendStatus(204);
-
-    await Order.findByIdAndUpdate(orderId, { table, status, products });
+    await model.findByIdAndUpdate(orderId, { table, status, products });
 
     res.sendStatus(204);
   } catch (error) {
