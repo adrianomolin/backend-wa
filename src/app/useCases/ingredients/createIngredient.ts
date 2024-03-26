@@ -1,8 +1,9 @@
 import { Request, Response } from 'express';
-import { Ingredient } from '../../models/Ingredient';
+import { getDBModel } from '../../../tenant/utils/switchDb';
 
 export async function createIngredient(req: Request, res: Response) {
   try {
+    const tenant = req.tenant;
     const { icon, name } = req.body;
 
     if (!name) {
@@ -11,15 +12,8 @@ export async function createIngredient(req: Request, res: Response) {
       });
     }
 
-    if (req.headers['demo'] === 'true') {
-      return res.status(201).json({
-        name,
-        icon,
-        _id: 'demo-' + Math.random(),
-      });
-    }
-
-    const ingredient = await Ingredient.create({ icon, name });
+    const model = await getDBModel(tenant, 'Ingredient');
+    const ingredient = await model.create({ icon, name });
 
     res.status(201).json(ingredient);
   } catch (error) {

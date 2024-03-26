@@ -1,6 +1,6 @@
-import { model, Schema } from 'mongoose';
+import { Schema } from 'mongoose';
 
-export const Ingredient = model('Ingredient', new Schema({
+export const Ingredient = new Schema({
   icon: {
     type: String,
     required: true,
@@ -9,4 +9,4 @@ export const Ingredient = model('Ingredient', new Schema({
     type: String,
     required: true,
   },
-}));
+});

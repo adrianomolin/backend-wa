@@ -1,14 +1,13 @@
 import { Request, Response } from 'express';
-
-import { Ingredient } from '../../models/Ingredient';
+import { getDBModel } from '../../../tenant/utils/switchDb';
 
 export async function deleteIngredient(req: Request, res: Response) {
   try {
+    const tenant = req.tenant;
     const { ingredientId } = req.params;
 
-    if (req.headers['demo'] === 'true') return res.sendStatus(204);
-
-    await Ingredient.findByIdAndDelete(ingredientId);
+    const model = await getDBModel(tenant, 'Ingredient');
+    await model.findByIdAndDelete(ingredientId);
 
     res.sendStatus(204);
   } catch (error) {
