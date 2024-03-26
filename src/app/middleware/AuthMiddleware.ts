@@ -23,6 +23,7 @@ export async function AuthMiddleware(req: Request, res: Response, next: NextFunc
   const token = authorization.replace('Bearer', '').trim();
 
   try {
+    const data = jwt.verify(token, env.jwtSecret);
     const { id, permissions, orgId } = data as TokenPayload;
 
     const org = await switchDB(orgId, schemas);
