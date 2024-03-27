@@ -1,14 +1,13 @@
 import { Request, Response } from 'express';
-
-import { Order } from '../../models/Order';
+import { getDBModel } from '../../../tenant/utils/switchDb';
 
 export async function cancelOrder(req: Request, res: Response) {
   try {
+    const tenant = req.tenant;
     const { orderId } = req.params;
 
-    if (req.headers['demo'] === 'true') return res.sendStatus(204);
-
-    await Order.findByIdAndDelete(orderId);
+    const model = await getDBModel(tenant, 'Order');
+    await model.findByIdAndDelete(orderId);
 
     res.sendStatus(204);
   } catch (error) {

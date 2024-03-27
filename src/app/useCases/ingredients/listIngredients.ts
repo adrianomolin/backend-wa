@@ -1,10 +1,12 @@
 import { Request, Response } from 'express';
-
-import { Ingredient } from '../../models/Ingredient';
+import { getDBModel } from '../../../tenant/utils/switchDb';
 
 export async function listIngredients(req: Request, res: Response) {
   try {
-    const ingredients = await Ingredient.find();
+    const tenant = req.tenant;
+
+    const model = await getDBModel(tenant, 'Category');
+    const ingredients = await model.find();
 
     res.json(ingredients);
   } catch (error) {

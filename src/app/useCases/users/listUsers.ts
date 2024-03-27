@@ -1,10 +1,12 @@
 import { Request, Response } from 'express';
-
-import { User } from '../../models/User';
+import { getDBModel } from '../../../tenant/utils/switchDb';
 
 export async function listUsers(req: Request, res: Response) {
   try {
-    const user = await User.find();
+    const org = req.tenant;
+
+    const model = await getDBModel(org, 'User');
+    const user = await model.find();
 
     res.json(user);
   } catch (error) {

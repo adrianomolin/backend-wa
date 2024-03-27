@@ -1,12 +1,12 @@
 import { Request, Response } from 'express';
-
-import { Order } from '../../models/Order';
+import { getDBModel } from '../../../tenant/utils/switchDb';
 
 export async function resetDayOrders(req: Request, res: Response) {
   try {
-    if (req.headers['demo'] === 'true') return res.json([]);
+    const tenant = req.tenant;
+    const model = await getDBModel(tenant, 'Order');
 
-    const orders = await Order.find()
+    const orders = await model.find()
       .where({ archived: false })
       .updateMany({ archived: true });
 

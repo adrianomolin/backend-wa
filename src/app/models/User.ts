@@ -1,8 +1,7 @@
-import { model, Schema } from 'mongoose';
+import { Schema } from 'mongoose';
 import isEmail from 'validator/lib/isEmail';
 
-
-export const User = model('User', new Schema({
+export const User = new Schema({
   name: {
     type: String,
     required: true,
@@ -19,18 +18,17 @@ export const User = model('User', new Schema({
     required: true,
     default: ['']
   },
-  role: {
-    type: String,
-    required: true,
-    uppercase: true,
-    default: 'USER'
-  },
   password: {
     type: String,
     required: [true, 'Please enter an password'],
   },
-  demo: {
-    type: Boolean,
-    default: false,
-  }
-}));
+  role: {
+    type: String,
+    required: true,
+    default: 'USER'
+  },
+  orgId: {
+    type: String,
+    required: true,
+  },
+});
